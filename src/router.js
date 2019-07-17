@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import ProductsList from './views/ProductsList.vue'
+import StarRating from 'vue-star-rating'
 
 Vue.use(Router)
+Vue.component('star-rating', StarRating);
+
 
 export default new Router({
   mode: 'history',
@@ -10,16 +13,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'Products List',
+      component: ProductsList
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/product_card',
+      name: 'Product Card',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/ProductCard.vue')
     }
   ]
 })

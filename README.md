@@ -1,29 +1,11 @@
-# baby_food
+Запускаємо проект:
 
-## Project setup
-```
-npm install
-```
+1. npm install
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+2. npm run serve
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
+"/" - categories_list_table_1562827545, 
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+"/product_card" - Product card_1562827545

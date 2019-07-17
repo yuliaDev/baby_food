@@ -1,31 +1,64 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <header-component/>
+        <breadcrumb/>
+
+        <router-view/>
+        <slider-component/>
+        <footer-component/>
     </div>
-    <router-view/>
-  </div>
 </template>
+<script>
+    import HeaderComponent from './components/HeaderComponent'
+    import Breadcrumb from './components/Breadcrumb'
+    import SliderComponent from './components/SliderComponent'
+    import FooterComponent from './components/FooterComponent'
+
+    export default {
+        components: {
+            HeaderComponent,
+            Breadcrumb,
+            SliderComponent,
+            FooterComponent
+
+        }
+    }
+</script>
+
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+    * {
+        margin: 0;
+        padding: 0;
+    }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+    body {
+        font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+        font-size: 12px;
+        color: #333333;
+        /*background-color: cornflowerblue;*/
+    }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    button {
+        border: none;
+        outline: none!important;
+        cursor: pointer;
+    }
+
+    .container {
+        max-width: 1140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+    }
 </style>
