@@ -1,38 +1,65 @@
 <template>
     <aside>
         <div v-for="(category, id) in categories" :key="id" class="filter__category-block">
-            <button @click="toggle(category)" class="filter__category openable">
+            <button @click="toggle(category)" :class="['filter__category', {openable : category.subcategories}]">
                 <span class="filter__category-name" :class="{ active: category.show }">{{category.name}}</span>
-                <div class="filter__category-toggle"> {{ category.show ? '–' : '+' }}</div>
+                <div v-if="category.subcategories" class="filter__category-toggle"> {{ category.show ? '–' : '+' }}
+                </div>
+                <div v-else class="filter__category-toggle">
+                    <input class="radio" type="radio" name="category" :id='category+id' value="Назва">
+                    <label :for='category+id'></label>
+                </div>
             </button>
 
             <div v-show="category.show">
                 <ul>
                     <li v-for="(subcategory,index) in category.subcategories" class="filter__subcategory" :key="index">
-                        {{subcategory}}
+                        <div>{{subcategory}}</div>
+                        <div>
+                            <input class="radio" type="radio" :name="category.id" :id='subcategory+index'
+                                   value="Назва">
+                            <label :for='subcategory+index'></label>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <ul class="filter__category">
-            <span class="filter__category-name">Акції</span>
-        </ul>
-        <ul class="filter__category"><span class="filter__category-name">Хіти продаж</span></ul>
-        <ul class="filter__category"><span class="filter__category-name">Новинки</span></ul>
         <div class="filter__price-block">
             <div class="filter__price-title">Ціна</div>
-            <div class="filter__price-center">
 
+            <vue-slider v-model="value"
+                        :railStyle="rail"
+                        :tooltip="'always'"
+                        :tooltipPlacement="'bottom'"
+                        :process="process"
+                        :width="200"
+                        :min="14" :max="78"
+                        :min-range="1"
+                        class="range-slider">
+                <template #dot>
+                    <button class="custom-dot"></button>
+                </template>
+                <template #tooltip="{ value }">
+                    <div class="custom-tooltip">
+                        <span class="custom-tooltip__value">{{ value }}</span> грн
+                    </div>
+                </template>
+            </vue-slider>
+
+
+            <div class="filter__price-center">
                 <button class="filter__price-btn">Застосувати фільтр</button>
             </div>
 
-            <div :class="['filter__price-description', {closed: close}]">
+            <div :class="{closed: close}">
                 <div class="filter__price-x_container">
                     <button class="filter__price-x" @click="close = !close">X</button>
                 </div>
+                <div class="filter__price-description">
                 Якщо Ви вже настроїли усі фільтри, то натисніть кнопку і товари на сторінці оновляться,
                 або продовжуйте вибір і натисніть на кнопку у будь-який момент.
+                </div>
             </div>
         </div>
 
@@ -77,8 +104,27 @@
                         subcategories: [
                             '200 мл', '1 л'
                         ]
+                    },
+                    {
+                        id: 5,
+                        name: 'Акції'
+                    },
+                    {
+                        id: 6,
+                        name: 'Хіти продаж'
+                    },
+                    {
+                        id: 7,
+                        name: 'Новинки'
                     }
-                ]
+                ],
+
+                value: [35, 78],
+                process: dotsPos => [
+                    [dotsPos[0], dotsPos[1], {backgroundColor: '#d1d1d1'}]
+                ],
+                rail: {backgroundColor: 'white', border: '1px solid #d1d1d1'}
+
 
             }
         },
@@ -144,9 +190,67 @@
     }
 
     .filter__subcategory {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         font-size: 14px;
         color: #333333;
         margin: 10px 25px;
+    }
+
+    .radio {
+        vertical-align: top;
+        margin: 0 3px 0 0;
+        width: 10px;
+        height: 10px;
+    }
+
+    .radio + label {
+        cursor: pointer;
+    }
+
+    .radio:not(checked) {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .radio:not(checked) + label {
+        position: relative;
+        padding: 0 0 0 20px;
+    }
+
+    .radio:not(checked) + label:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 26px;
+        height: 14px;
+        border-radius: 12px;
+        background: transparent;
+        border: 1px solid #d0d0d0;
+    }
+
+    .radio:not(checked) + label:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+        background: #d0d0d0;
+        transition: all .2s;
+    }
+
+    .radio:checked + label:before {
+        background: transparent;
+        border: 1px solid #8eb52b;
+    }
+
+    .radio:checked + label:after {
+        left: 12px;
+        background: #8eb52b;
     }
 
     .filter__price-block {
@@ -157,8 +261,11 @@
     }
 
     .filter__price-title {
-        margin: 25px;
+        margin: 15px 20px;
         font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .filter__price-center {
@@ -193,6 +300,7 @@
         color: #ffffff;
         font-size: 16px;
         font-weight: 400;
+        margin: 5px;
     }
 
     .filter__price-x {
@@ -211,4 +319,33 @@
     .closed {
         display: none;
     }
+
+    .range-slider {
+        margin: 20px auto 40px 15px;
+    }
+
+    .custom-dot {
+        width: 18px;
+        height: 18px;
+        background-color: #8eb52b;
+        border-radius: 50%;
+    }
+
+    .custom-tooltip {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        color: #8eb52b;
+        font-size: 14px;
+    }
+
+    .custom-tooltip__value {
+        font-size: 18px;
+        margin: auto 5px;
+    }
+
 </style>
