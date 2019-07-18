@@ -468,7 +468,7 @@
     }
 
     .product-card__table {
-        width: 445px;
+        width: 300px;
         height: 94px;
         display: table;
     }
@@ -540,6 +540,9 @@
             -webkit-box-direction: normal;
             -ms-flex-direction: row;
             flex-direction: row;
+        }
+        .product-card__table {
+            width: 445px;
         }
         .product-card__select-row {
             -webkit-box-orient: horizontal;

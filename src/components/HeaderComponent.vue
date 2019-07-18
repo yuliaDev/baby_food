@@ -1,7 +1,9 @@
 <template>
     <header>
         <div class="header-container">
-            <img src="images/header-logo.png" class="header-container__logo">
+            <div class="header-container__logo">
+                <img src="images/header-logo.png">
+            </div>
             <ul class="header__nav">
                 <li class="header__nav-item"><a href="#">Головна</a></li>
                 <li class="header__nav-item"><a href="#">Каталог</a></li>
@@ -52,14 +54,21 @@
     }
 
     .header-container__logo {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
         -ms-flex-item-align: self-start;
         align-self: self-start;
     }
 
     .header__nav {
+
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        -webkit-box-flex: 2;
+        -ms-flex: 2;
+        flex: 2;
         -ms-flex-pack: distribute;
         justify-content: space-around;
         -ms-flex-wrap: wrap;
@@ -71,13 +80,16 @@
     }
 
     .header__nav-item {
-        margin: 20px 10px 0 0;
+        margin: 20px 10px 0 10px;
     }
 
     .header__icons {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
         -ms-flex-pack: distribute;
         justify-content: space-around;
     }

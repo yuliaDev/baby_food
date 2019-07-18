@@ -41,7 +41,7 @@
 
 <script>
     export default {
-        name: "Filter",
+        name: "FilterComponent",
         data() {
             return {
                 close: false,
